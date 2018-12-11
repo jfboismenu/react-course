@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.module.css';
 import Person from './Person/Person'
 
 class App extends Component {
@@ -52,22 +52,10 @@ class App extends Component {
     }
 
     render() {
-        const style = {
-            backgroundColor: 'white',
-            font: 'inherit',
-            border: '1px solid blue',
-            padding: '8px',
-            cursor: 'pointer',
-        }
-        const show_style = {
-            backgroundColor: 'green',
-            font: 'inherit',
-            border: '1px solid blue',
-            color: 'white',
-            padding: '8px',
-            cursor: 'pointer'
-        }
         let people_elements = null;
+
+        let btnClass = classes.Person;
+
         if (this.state.show_people) {
             const people = this.state.flip_list ? [...this.state.people].reverse() : this.state.people;
             people_elements = (
@@ -87,31 +75,28 @@ class App extends Component {
                     }
                 </div>                
             )
+            btnClass = classes.RedPerson;
         }
 
-        let classes = []
+        let text_classes = []
         if (this.state.people.length < 3) {
-            classes.push('red')
+            text_classes.push(classes.red)
         }
         if (this.state.people.length < 2) {
-            classes.push('bold')
+            text_classes.push(classes.bold)
         }
-        classes = classes.join(' ')
+        text_classes = text_classes.join(' ')
 
-        if (this.state.show_people) {
-            show_style.backgroundColor = 'red';
-        }
 
         return (
-            <div className="App">
+            <div className={classes.App}>
                 <h1>Hi, I'm a React app</h1>
-                <p className={classes}>This is really working!</p>
+                <p className={classes.FlipButton}>This is really working!</p>
                 <button
-                    style={style}
                     onClick={this.flipList}>Flip list
                 </button>
                 <button
-                    style={show_style}
+                    className={btnClass}
                     onClick={this.togglePeopleHandler}>{this.state.show_people ? "Hide People": "Show People"}
                 </button>
                 {people_elements}

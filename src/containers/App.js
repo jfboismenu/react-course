@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classes from './App.module.css';
-import Person from './Person/Person'
+import Persons from '../components/Persons/Persons'
+import Cockpit from '../components/Cockpit/Cockpit'
 
 class App extends Component {
 
@@ -54,51 +55,22 @@ class App extends Component {
     render() {
         let people_elements = null;
 
-        let btnClass = classes.Person;
 
         if (this.state.show_people) {
             const people = this.state.flip_list ? [...this.state.people].reverse() : this.state.people;
-            people_elements = (
-                <div>
-                    {
-                        people.map((person, index) => {
-                            return (
-                                <Person
-                                    click={() => {this.deletePersonHandler(person.id)}}
-                                    name={person.name}
-                                    age={person.age}
-                                    changed={(event) => {this.nameChangedHandler(event.target.value, person.id)}}
-                                    key={person.id}
-                                ></Person>
-                            );
-                        })
-                    }
-                </div>                
-            )
-            btnClass = classes.RedPerson;
+            people_elements = <Persons
+                                people={people}
+                                clicked={this.deletePersonHandler}
+                                changed={this.nameChangedHandler}/>
         }
-
-        let text_classes = []
-        if (this.state.people.length < 3) {
-            text_classes.push(classes.red)
-        }
-        if (this.state.people.length < 2) {
-            text_classes.push(classes.bold)
-        }
-        text_classes = text_classes.join(' ')
-
-
         return (
             <div className={classes.App}>
-                <h1>Hi, I'm a React app</h1>
-                <p className={classes.FlipButton}>This is really working!</p>
-                <button
-                    onClick={this.flipList}>Flip list
-                </button>
-                <button
-                    className={btnClass}
-                    onClick={this.togglePeopleHandler}>{this.state.show_people ? "Hide People": "Show People"}
-                </button>
+                <Cockpit
+                    people={this.state.people}
+                    show_people={this.state.show_people}
+                    flip_clicked={this.flipList}
+                    toggle_clicked={this.togglePeopleHandler}
+                />
                 {people_elements}
             </div>
         );

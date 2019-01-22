@@ -2,6 +2,9 @@ import React from 'react';
 import classes from './Person.module.css';
 
 const person = (props) => {
+    if ( 0.7 < Math.random() ) {
+        throw Error("Something something!")
+    }
     return (
         <div className={classes.Person}>
             <p>{props.name} is {props.age} years old. </p>

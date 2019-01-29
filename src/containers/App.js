@@ -57,7 +57,7 @@ class App extends Component {
     }
 
     loginHandler = () => {
-        this.setState({authenticated: true})
+        this.setState( prevState => {return { authenticated: !prevState.authenticated }} );
     }
 
 

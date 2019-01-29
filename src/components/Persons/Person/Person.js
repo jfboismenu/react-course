@@ -22,7 +22,7 @@ class Person extends Component {
             <Aux>
                 <AuthContext.Consumer>
                     {
-                        auth => auth ? <p>I'm authenticated!!!</p>: null
+                        ( auth ) => { return (auth ? <p>I'm authenticated!!!</p>: null); }
                     }
                 </AuthContext.Consumer>
                 <p>{this.props.name} is {this.props.age} years old. </p>

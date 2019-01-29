@@ -31,6 +31,7 @@ const Cockpit = (props) => {
                 className={btnClass}
                 onClick={props.toggle_clicked}>{props.show_people ? "Hide People": "Show People"}
             </button>
+            <button onClick={props.login}>Log in</button>
         </div>
     )
 }

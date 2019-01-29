@@ -5,6 +5,8 @@ import Cockpit from '../components/Cockpit/Cockpit'
 import withClass from '../hoc/withClass'
 import Aux from '../hoc/aux'
 
+export const AuthContext = React.createContext(false)
+
 class App extends Component {
 
     state = {
@@ -15,7 +17,8 @@ class App extends Component {
             {id: 4, name: "Noémie", age: 37}
         ],
         show_people: false,
-        flip_list: false
+        flip_list: false,
+        authenticated: false
     }
 
     flipList = () => {
@@ -51,19 +54,23 @@ class App extends Component {
         const people = [...this.state.people]
         people.splice(index, 1)
         this.setState({people: people})
-
     }
 
+    loginHandler = () => {
+        this.setState({authenticated: true})
+    }
+
+
     render() {
-        let people_elements = null;
+        let persons = null;
 
 
         if (this.state.show_people) {
             const people = this.state.flip_list ? [...this.state.people].reverse() : this.state.people;
-            people_elements = <Persons
-                                people={people}
-                                clicked={this.deletePersonHandler}
-                                changed={this.nameChangedHandler}/>
+            persons = <Persons
+                        people={people}
+                        clicked={this.deletePersonHandler}
+                        changed={this.nameChangedHandler}/>
         }
         return (
             <Aux>
@@ -71,9 +78,12 @@ class App extends Component {
                     people={this.state.people}
                     show_people={this.state.show_people}
                     flip_clicked={this.flipList}
+                    login={this.loginHandler}
                     toggle_clicked={this.togglePeopleHandler}
                 />
-                {people_elements}
+                <AuthContext.Provider value={this.state.authenticated}>
+                    {persons}
+                </AuthContext.Provider>
             </Aux>
         );
     }

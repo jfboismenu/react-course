@@ -1,13 +1,14 @@
-import React from 'react'
+import React, {Component} from 'react'
 import Aux from '../../hoc/Aux'
 import {Danger, Success} from '../UI/Button/Button'
 
-const orderSummary = (props) => {
+const OrderSummary = (props) => {
     const ingredientSummary = Object.keys(props.ingredients).map(
         (name) => {
             return (
                 <li key={name}>
-                    <span style={{ textTransform: 'capitalize' }}>{name}</span><span>: {props.ingredients[name]}</span>
+                    <span style={{ textTransform: 'capitalize' }}>{name}</span>
+                    <span>: {props.ingredients[name]}</span>
                 </li>
             );
         }
@@ -26,6 +27,7 @@ const orderSummary = (props) => {
             <Success clicked={props.continued}>CONTINUE</Success>
         </Aux>    
     )
-};
+}
 
-export default orderSummary;
+
+export default OrderSummary;

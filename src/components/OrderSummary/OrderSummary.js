@@ -1,6 +1,6 @@
 import React from 'react'
 import Aux from '../../hoc/Aux'
-import {Cancel, Continue} from '../UI/Button/Button'
+import {Danger, Success} from '../UI/Button/Button'
 
 const orderSummary = (props) => {
     const ingredientSummary = Object.keys(props.ingredients).map(
@@ -21,8 +21,8 @@ const orderSummary = (props) => {
                 {ingredientSummary}
             </ul>
             <p>Continue to checkout?</p>
-            <Cancel/>
-            <Continue/>
+            <Danger clicked={props.cancelled}>CANCEL</Danger>
+            <Success clicked={props.continued}>CONTINUE</Success>
         </Aux>    
     )
 };

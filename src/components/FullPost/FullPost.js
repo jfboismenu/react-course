@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios'
+import axios from '../../axios'
 
 import './FullPost.css';
 
@@ -24,12 +24,12 @@ class FullPost extends Component {
             return;
         }
         // The post changed, so fetch it from the backend.
-        axios.get("https://jsonplaceholder.typicode.com/posts/" + this.props.id)
+        axios.get("/posts/" + this.props.id)
             .then(response => this.setState({loadedPost: response.data}))
     }
 
     deletePostHandler = () => {
-        axios.delete("https://jsonplaceholder.typicode.com/posts/" + this.state.loadedPost.id)
+        axios.delete("/posts/" + this.state.loadedPost.id)
             .then(response => console.log(response))
     }
 

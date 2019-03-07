@@ -38,7 +38,7 @@ class FullPost extends Component {
         if (this.props.id) {
             post = <p style={{textAlign: 'center'}}>Loading...</p>;
         }
-        if (this.state.loadedPost != null && this.state.loadedPost.id == this.props.id) {
+        if (this.state.loadedPost != null && this.state.loadedPost.id === this.props.id) {
             post = (
                 <div className="FullPost">
                     <h1>{this.state.loadedPost.title}</h1>

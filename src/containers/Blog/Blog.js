@@ -8,7 +8,7 @@ import './Blog.css';
 
 class Blog extends Component {
 
-    state = {posts: [], selectedPostId: null}
+    state = {posts: [], selectedPostId: null, error: false}
 
     componentDidMount() {
         axios.get("https://jsonplaceholder.typicode.com/posts")
@@ -22,6 +22,9 @@ class Blog extends Component {
                 })
                 this.setState({posts: updatedPosts})
             })
+            .catch(error => {
+                this.setState({error: true})
+            })
     }
 
     postSelectedHandler = (id) => {
@@ -29,20 +32,23 @@ class Blog extends Component {
     }
 
     render () {
-        const posts = this.state.posts.map(post => {
-            return (
-                <Post 
-                    key={post.id}
-                    author={post.author}
-                    title={post.title}
-                    clicked={ () => this.postSelectedHandler(post.id) }
-                />
-            )
-        })
+        let content = <p style={{textAlign: 'center'}}>There was an error loading the posts.</p>;
+        if (!this.state.error) {
+            content = this.state.posts.map(post => {
+                return (
+                    <Post 
+                        key={post.id}
+                        author={post.author}
+                        title={post.title}
+                        clicked={ () => this.postSelectedHandler(post.id) }
+                    />
+                )
+            })
+        }
         return (
             <div>
                 <section className="Posts">
-                    {posts}
+                    {content}
                 </section>
                 <section>
                     <FullPost id={this.state.selectedPostId}/>

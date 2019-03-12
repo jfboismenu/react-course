@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom'
+import { Route, NavLink } from 'react-router-dom'
 
 
 import FullPost from '../../containers/FullPost/FullPost';
 import NewPost from '../../containers/NewPost/NewPost';
 import Posts from '../../containers/Posts/Posts';
-
-import './Blog.css';
+import classes from './Blog.css'
 
 class Blog extends Component {
 
@@ -16,8 +15,16 @@ class Blog extends Component {
                 <header>
                     <nav>
                         <ul>
-                            <li><Link to="/">Home</Link></li>
-                            <li><Link to="/new-post">New Post</Link></li>
+                            <li><NavLink
+                                exact
+                                to="/"
+                                // activeClassName="my-active"
+                                // activeStyle={{
+                                //     color: '#fa923f',
+                                //     textDecoration: 'underline'
+                                // }}
+                                >Home</NavLink></li>
+                            <li><NavLink to="/new-post">New Post</NavLink></li>
                         </ul>
                     </nav>
                 </header>

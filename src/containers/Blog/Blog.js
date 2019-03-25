@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import { Route, NavLink, Switch, Redirect } from 'react-router-dom'
 
 import NewPost from '../../containers/NewPost/NewPost';
-import Posts from '../../containers/Posts/Posts';
 import classes from './Blog.css'
+const Posts = React.lazy(() => import('../../containers/Posts/Posts'))
 
 class Blog extends Component {
 
@@ -28,7 +28,11 @@ class Blog extends Component {
                 </header>
                 <Switch>
                     <Route path="/new-post" component={NewPost}/>
-                    <Route path="/posts" component={Posts}/>
+                    <Route path="/posts" render={(props) => (
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <Posts {...props}/>
+                        </Suspense>
+                    )}/>
                     <Redirect from="/" to="/posts"/>
                 </Switch>
             </div>

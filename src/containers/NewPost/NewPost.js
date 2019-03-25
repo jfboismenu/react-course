@@ -22,7 +22,9 @@ class NewPost extends Component {
         }
 
         axios.post("/posts", data)
-            .then(response => console.log(response))
+            .then(response => {
+                this.props.history.push("/posts")
+            })
     }
 
     render () {

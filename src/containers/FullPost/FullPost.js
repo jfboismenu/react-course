@@ -7,9 +7,13 @@ class FullPost extends Component {
 
     state = {loadedPost: null}
 
-    componentDidUpdate() {
+    getPostId = () => {
+        return Number(this.props.match.params.id)
+    }
+
+    componentDidMount() {
         // If nothing is selected
-        if (this.props.id === null) {
+        if (this.getPostId() === null) {
             // And there is currently a post displayed
             if (this.state.loadedPost != null) {
                 // Get rid of the disoplayed post.
@@ -20,12 +24,14 @@ class FullPost extends Component {
         }
         // If we have a post in the UI, but it hasn't changed, no need to fetch it from
         // the backend.
-        if (this.state.loadedPost != null && this.state.loadedPost.id === this.props.id) {
+        if (this.state.loadedPost != null && this.state.loadedPost.id === this.getPostId()) {
             return;
         }
         // The post changed, so fetch it from the backend.
-        axios.get("/posts/" + this.props.id)
-            .then(response => this.setState({loadedPost: response.data}))
+        axios.get("/posts/" + this.getPostId())
+            .then(response => {
+                this.setState({loadedPost: response.data})
+            })
     }
 
     deletePostHandler = () => {
@@ -35,10 +41,13 @@ class FullPost extends Component {
 
     render () {
         let post = <p style={{textAlign: 'center'}}>Please select a Post!</p>;
-        if (this.props.id) {
+        if (this.getPostId() === null) {
             post = <p style={{textAlign: 'center'}}>Loading...</p>;
         }
-        if (this.state.loadedPost != null && this.state.loadedPost.id === this.props.id) {
+        if (this.state.loadedPost) {
+            console.log(this.state.loadedPost.id);
+        }
+        if (this.state.loadedPost !== null && this.state.loadedPost.id === this.getPostId()) {
             post = (
                 <div className="FullPost">
                     <h1>{this.state.loadedPost.title}</h1>
